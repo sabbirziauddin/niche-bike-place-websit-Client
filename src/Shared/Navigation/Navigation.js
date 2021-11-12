@@ -34,7 +34,9 @@ const Navigation = () => {
                         <Button color="inherit" sx={{ color: '#fff' }}>Home</Button>
                     </Link>
                     
-                    <Button color="inherit">Login</Button>
+                    <Link to='/login' >
+                        <Button color="inherit" sx={{ color: '#fff' }}>Login</Button>
+                    </Link>
                 </Toolbar>
             </AppBar>
         </Box>
