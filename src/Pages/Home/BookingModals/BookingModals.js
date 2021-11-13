@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { TextField } from '@mui/material';
 import MuiButton from '../../../styledComponent/MuiButton';
 import { Info } from '@mui/icons-material';
+import useAuth from '../../../hooks/useAuth';
 
 const style = {
     position: 'absolute',
@@ -21,16 +22,56 @@ const style = {
     p: 4,
 };
 
-const BookingModals = ({openPlacing,handlePlacingClose,item}) => {
+const BookingModals = ({ openPlacing, handlePlacingClose, item, setOrderSuccess}) => {
      const { name, description, price} = item;
+     const {user} = useAuth()
+    const initialInfo = { customerName: user.displayName, email: user.email,phone:''}
+    const [orderInfo, setOrderInfo] = useState({initialInfo});
+
+     const handleOnBlur =(e)=>{
+         const field = e.target.name;
+         const value = e.target.value;
+         const newInfo ={...orderInfo};
+         newInfo[field]=value;
+         //console.log(newInfo);
+         setOrderInfo(newInfo);
+
+
+
+     }
 
     const handleSubmit =(e)=>{
-        alert('submitted form');
+        
         //collect data from the form
+        const order={
+            ...orderInfo,
+            productName :name,
+            productPrice:price,
+        }
+        console.log(order);
         // send data to the server
-        handlePlacingClose();
+
+        fetch('http://localhost:5000/orders',{
+            method:'POST',
+            headers:{
+                'content-type':'application/json'
+            },
+            body:JSON.stringify(order)
+
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            if (data.insertedId){
+                setOrderSuccess(true);
+
+                handlePlacingClose();
+
+            }
+        });
+        
         e.preventDefault();
     }
+
   
 
     return (
@@ -73,9 +114,29 @@ const BookingModals = ({openPlacing,handlePlacingClose,item}) => {
                             defaultValue={description}
                             size="small"
                         />
-                        <TextField sx={{marginBottom:'15px'}} fullWidth label="Name" id="fullWidth" />
-                        <TextField sx={{ marginBottom: '15px' }}fullWidth label="Email" id="fullWidth" />
-                        <TextField sx={{ marginBottom: '15px' }}fullWidth label="phone" id="fullWidth" />
+                        <TextField 
+                        sx={{ marginBottom: '15px' }} 
+                        fullWidth label="Name"
+                        onBlur={handleOnBlur}
+                        name="customerName" 
+                        id="fullWidth" 
+                        defaultValue={user.displayName} 
+                        />
+                        <TextField 
+                        sx={{ marginBottom: '15px' }} 
+                        fullWidth label="Email" 
+                        onBlur={handleOnBlur}
+                        name = "email"
+                        id="fullWidth" 
+                        defaultValue={user.email} 
+                        />
+                        <TextField 
+                        sx={{ marginBottom: '15px' }}
+                        fullWidth label="phone"
+                        onBlur={handleOnBlur}
+                        name= "phone" 
+                        id="fullWidth" 
+                        />
                         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
                             <MuiButton type="submit"  sx={{ width: '200px' }} >Submit order</MuiButton>
 

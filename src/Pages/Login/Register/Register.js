@@ -1,90 +1,130 @@
 import React, { useState } from 'react';
 import Grid from '@mui/material/Grid';
-import { Button, Container, TextField, Typography } from '@mui/material';
-import login1 from '../../../images/log3.jpeg'
-import logImg from '../../../images/log4.jpeg'
+import { Alert, Button, Container, TextField, Typography, CircularProgress } from '@mui/material';
 import MuiButton from '../../../styledComponent/MuiButton';
 import { Link } from 'react-router-dom';
+import useAuth from '../../../hooks/useAuth';
+import { Password } from '@mui/icons-material';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const Register = () => {
 
-    const [loginData, setLoginData] = useState({})
-    const style = {
 
-        minHeight: '600',
-        height: '100vh',
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        background: `url(${login1})`,
+    const [loginData, setLoginData,] = useState({});
+    // const [email, setEmail] = useState('');
+    // const [pass,setPass] = useState('');
+    const { registerUser, signInWithGoogle, setUser, isLoading, authError, user} = useAuth();
 
-
-
-    }
+    const history = useHistory()
+    const location = useLocation()
+    const url = location?.state?.from ||"/";
+    
     const handleOnChange = (e) => {
         const field = e.target.name;
         const value = e.target.value;
         const newLoginData = { ...loginData };
         newLoginData[field] = value;
         setLoginData(newLoginData);
-        console.log(field, value);
+        console.log(field,value);
+        
+       
+        
     }
     const handleLoginSubmit = (e) => {
-        if (loginData.password1!== loginData.password2){
+        
+        if (loginData.password !== loginData.password2){
             alert('password didnt match');
             return;
         }
-        alert('submit');
+        registerUser(loginData.email,loginData.password);
+
         e.preventDefault();
     }
+
+    
+
+    const handleSignInWithGoogle = () => {
+        signInWithGoogle()
+            .then((res) => {
+                setUser(res.user);
+                history.replace(url);
+                
+
+            }
+
+            )
+            .catch((err) => console.dir(err));
+    };
+    // const handleSignInWithGoogle=()=>{
+    //     signInWithGoogle(location,history);
+    // }
     return (
         <div>
+            
             <Container>
                 <Grid container spacing={2}>
 
                     <Grid item xs={12} md={12}>
+                        {
+                            user?.email && <Alert severity="success">account created successfully!</Alert>
+                        }
+                        {
+                            authError && <Alert severity="error">{authError}</Alert>
+                        }
                         <Typography variant="h4" gutterBottom >Register </Typography>
-                        <form onSubmit={handleLoginSubmit} >
-                            <TextField id="standard-basic"
+                        {!isLoading && <form onSubmit={handleLoginSubmit} >
+                            <TextField 
+                                id="standard-basic"
                                 sx={{ width: '75%', m: '1', px: '5' }}
                                 label="Your email"
-                                type="email"
                                 name="email"
-                                onBlur={handleOnChange}
+                                type="email"
+                                
+                                onChange={handleOnChange}
                                 variant="standard" />
                             <br />
                             <br />
                             <TextField
                                 sx={{ width: '75%', m: '1' }}
-                                id="outlined-password-input"
+                                id="standard-basic"
                                 label="Your Password"
                                 type="password"
-                                name="password1"
-                                onBlur={handleOnChange}
+                                name="password"
+                                onChange={handleOnChange}
                                 autoComplete="current-password"
+                                variant="standard"
                             />
 
                             <TextField
                                 sx={{ width: '75%', margin: '30px' }}
-                                id="outlined-password-input"
+                                id="standard-basic"
                                 label="Retype Password"
                                 type="password"
                                 name="password2"
-                                onBlur={handleOnChange}
-                                autoComplete="current-password"
+                                onChange={handleOnChange}
+                                variant="standard"
                             />
                             <br />
                             <br />
                             <Link to='/login'>
-                                <Button variant="text"> Already register?please login</Button>
+                                <Button variant="text"> Already register?please Register</Button>
 
                             </Link>
                             <br />
+                           
 
                             <MuiButton sx={{ width: '25%' }} type="submit"> login</MuiButton>
+                            <MuiButton onClick={handleSignInWithGoogle}> Google sign IN</MuiButton>
+                            
+
+                            
 
 
-                        </form>
+                        </form>}
+                        {
+                            isLoading && <CircularProgress color="success" />
+                        }
+                        
 
                     </Grid>
 

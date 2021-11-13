@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 
 import Grid from '@mui/material/Grid';
-import { Button, Container, TextField, Typography } from '@mui/material';
+import { Alert, Button, CircularProgress, Container, TextField, Typography } from '@mui/material';
 import login1 from '../../../images/log3.jpeg'
 import logImg from '../../../images/log4.jpeg'
 import MuiButton from '../../../styledComponent/MuiButton';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
+import useAuth from '../../../hooks/useAuth';
 
 
 
 const Login = () => {
-    const [loginData,setLoginData] =useState({})
+    const {user, loginUser} =useAuth();
+    const [loginData,setLoginData,isLoading,authError ] =useState({})
+    const location = useLocation();
+    const history = useHistory()
     const style ={
         
         minHeight:'600',
@@ -32,7 +36,7 @@ const Login = () => {
         console.log(field,value);
     }
     const handleLoginSubmit =(e)=>{
-        
+        loginUser(loginData.email,loginData.password,location,history)
         alert('submit');
         e.preventDefault();
     }
@@ -74,6 +78,15 @@ const Login = () => {
 
 
                         </form>
+                        {
+                            isLoading && <CircularProgress color="success" />
+                        }
+                        {
+                            user?.email && <Alert severity="success">account created successfully!</Alert>
+                        }
+                        {
+                            authError && <Alert severity="error">{authError}</Alert>
+                        }
 
                     </Grid>
                     

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -10,8 +10,10 @@ import MuiButton from '../../../styledComponent/MuiButton';
 import BookingModals from '../BookingModals/BookingModals';
 
 
-const Product = ({item}) => {
+const Product = ({ item, setOrderSuccess}) => {
     const { name, description, img,price} = item;
+    
+
     const [openPlacing, setOpenPlacing] = React.useState(false);
     const handlePlacingOpen = () => setOpenPlacing(true);
     const handlePlacingClose = () => setOpenPlacing(false);
@@ -49,7 +51,8 @@ const Product = ({item}) => {
             <BookingModals 
             item={item}
             openPlacing={openPlacing}
-            handlePlacingClose={handlePlacingClose} ></BookingModals>
+            handlePlacingClose={handlePlacingClose}
+                setOrderSuccess={setOrderSuccess} ></BookingModals>
         </>
 
         

@@ -7,8 +7,10 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 
 const Navigation = () => {
+    const { user, logOut} =useAuth()
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -25,18 +27,34 @@ const Navigation = () => {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1,alignItems:'center'  } }>
                         Bike palace
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    <Button color="inherit">####</Button>
+                    <Link to="" className='nav-link text-black'>signed by :<span style={{ color: 'white' }}>{user.displayName} </span></Link>
+                    <Link to='/home'>
+                        <Button color="inherit" sx={{ color: '#fff' }}>Home</Button>
+                    </Link>
                     <Link to= '/allProducts'>
                         <Button color="inherit" sx={{color:'#fff'}}>Best Products</Button>
                     </Link>
-
-                    <Link  to ='/home'>
-                        <Button color="inherit" sx={{ color: '#fff' }}>Home</Button>
-                    </Link>
                     
-                    <Link to='/login' >
-                        <Button color="inherit" sx={{ color: '#fff' }}>Login</Button>
-                    </Link>
+
+                    {
+                        user?.email ? 
+                            
+                        <Box>
+                                <Link to='/dashboard' >
+                                    <Button color="inherit" sx={{ color: '#fff' }}>Admin Dashboard</Button>
+                                </Link>
+                                <Button onClick={logOut} color="inherit" sx={{ color: '#fff' }}>LogOut</Button>
+                        </Box>
+                            
+
+                        :
+                            <Link to='/login' >
+                                <Button color="inherit" sx={{ color: '#fff' }}>Login</Button>
+                            </Link>
+                    }
+                    
+                    
                 </Toolbar>
             </AppBar>
         </Box>
