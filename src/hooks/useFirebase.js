@@ -104,7 +104,7 @@ const useFirebase =()=>{
 
     //for admin check in client side 
     useEffect(()=>{
-        fetch(`https://immense-oasis-52476.herokuapp.com/users/${user.email}`)
+        fetch(`http://localhost:5000/users/${user.email}`)
         .then(res=>res.json())
         .then(data =>{
             
@@ -129,7 +129,7 @@ const useFirebase =()=>{
         const user ={
             email, displayName
         };
-        fetch('https://immense-oasis-52476.herokuapp.com/users',{
+        fetch('http://localhost:5000/users',{
             method:(method),
             headers:{
                 'content-type':'application/json'

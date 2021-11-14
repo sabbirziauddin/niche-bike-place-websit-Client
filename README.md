@@ -5,4 +5,4 @@ deploy : firebase and heroku.
 i will implement my payment option later
 
 firebase live :https://bike-palace.web.app
-heoroku server:https://immense-oasis-52476.herokuapp.com/
+heoroku server:http://localhost:5000/

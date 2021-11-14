@@ -17,7 +17,7 @@ function createData(name, calories, fat, carbs, protein) {
 const ManageAllProducts = () => {
     const [order,setOrder] = useState([]);
     useEffect(()=>{
-        fetch('https://immense-oasis-52476.herokuapp.com/allorders')
+        fetch('http://localhost:5000/allorders')
         .then(res =>res.json())
         .then(data=>setOrder(data))
     },[])
@@ -25,7 +25,7 @@ const ManageAllProducts = () => {
 const handleDeleteOrder =(id)=>{
     const proceed = window.confirm("Do you want to delete!")
     if(proceed){
-        const url = `https://immense-oasis-52476.herokuapp.com/orders/${id}`
+        const url = `http://localhost:5000/orders/${id}`
         fetch(url, {
             method: 'DELETE'
 
