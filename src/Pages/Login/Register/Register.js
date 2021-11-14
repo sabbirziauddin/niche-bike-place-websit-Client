@@ -24,6 +24,7 @@ const Register = () => {
         const value = e.target.value;
         const newLoginData = { ...loginData };
         newLoginData[field] = value;
+       
         setLoginData(newLoginData);
         console.log(field,value);
         
@@ -36,28 +37,28 @@ const Register = () => {
             alert('password didnt match');
             return;
         }
-        registerUser(loginData.email,loginData.password);
+        registerUser(loginData.email, loginData.password,loginData.name,history);
 
         e.preventDefault();
     }
 
     
 
-    const handleSignInWithGoogle = () => {
-        signInWithGoogle()
-            .then((res) => {
-                setUser(res.user);
-                history.replace(url);
+    // const handleSignInWithGoogle = () => {
+    //     signInWithGoogle()
+    //         .then((res) => {
+    //             setUser(res.user);
+    //             history.replace(url);
                 
 
-            }
+    //         }
 
-            )
-            .catch((err) => console.dir(err));
-    };
-    // const handleSignInWithGoogle=()=>{
-    //     signInWithGoogle(location,history);
-    // }
+    //         )
+    //         .catch((err) => console.dir(err));
+    // };
+    const handleSignInWithGoogle=()=>{
+        signInWithGoogle(location,history);
+    }
     return (
         <div>
             
@@ -73,6 +74,16 @@ const Register = () => {
                         }
                         <Typography variant="h4" gutterBottom >Register </Typography>
                         {!isLoading && <form onSubmit={handleLoginSubmit} >
+                            
+                            <TextField
+                                id="standard-basic"
+                                sx={{ width: '75%', m: '1', px: '5' }}
+                                label="Your name"
+                                name="name"
+                                
+
+                                onBlur={handleOnChange}
+                                variant="standard" />
                             <TextField 
                                 id="standard-basic"
                                 sx={{ width: '75%', m: '1', px: '5' }}
@@ -80,7 +91,7 @@ const Register = () => {
                                 name="email"
                                 type="email"
                                 
-                                onChange={handleOnChange}
+                                onBlur={handleOnChange}
                                 variant="standard" />
                             <br />
                             <br />
@@ -90,7 +101,7 @@ const Register = () => {
                                 label="Your Password"
                                 type="password"
                                 name="password"
-                                onChange={handleOnChange}
+                                onBlur={handleOnChange}
                                 autoComplete="current-password"
                                 variant="standard"
                             />

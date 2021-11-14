@@ -14,6 +14,7 @@ import Users from "./Pages/Home/Users/Users";
 import Login from "./Pages/Login/Login/Login";
 import PrivateRoute from "./Pages/Login/PrivateRoute/PrivateRoute";
 import Register from "./Pages/Login/Register/Register";
+import Newslater from "./Pages/Newslater/Newslater";
 
 function App() {
   return (
@@ -38,6 +39,10 @@ function App() {
             </PrivateRoute>
             <Route exact path="/">
               <Home />
+            </Route>
+            <Route path='/newslatter'>
+              <Newslater></Newslater>
+
             </Route>
           </Switch>
         </Router>

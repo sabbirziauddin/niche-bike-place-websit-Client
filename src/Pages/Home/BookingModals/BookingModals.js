@@ -26,7 +26,7 @@ const BookingModals = ({ openPlacing, handlePlacingClose, item, setOrderSuccess}
      const { name, description, price} = item;
      const {user} = useAuth()
     const initialInfo = { customerName: user.displayName, email: user.email,phone:''}
-    const [orderInfo, setOrderInfo] = useState({initialInfo});
+    const [orderInfo, setOrderInfo] = useState(initialInfo);
 
      const handleOnBlur =(e)=>{
          const field = e.target.name;
@@ -47,11 +47,12 @@ const BookingModals = ({ openPlacing, handlePlacingClose, item, setOrderSuccess}
             ...orderInfo,
             productName :name,
             productPrice:price,
+        
         }
         console.log(order);
         // send data to the server
 
-        fetch('http://localhost:5000/orders',{
+        fetch('https://immense-oasis-52476.herokuapp.com/orders',{
             method:'POST',
             headers:{
                 'content-type':'application/json'
@@ -137,6 +138,7 @@ const BookingModals = ({ openPlacing, handlePlacingClose, item, setOrderSuccess}
                         name= "phone" 
                         id="fullWidth" 
                         />
+                       
                         <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
                             <MuiButton type="submit"  sx={{ width: '200px' }} >Submit order</MuiButton>
 

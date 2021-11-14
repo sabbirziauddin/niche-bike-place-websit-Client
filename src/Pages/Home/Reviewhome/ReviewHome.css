@@ -1,0 +1,7 @@
+.icon-color{
+    color:green;
+    font-size: 20px;
+}
+.icon-color:hover{
+    color:red;
+}

@@ -15,14 +15,37 @@ import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { Grid } from '@mui/material';
+import { Button,  } from '@mui/material';
+import {
+
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    useParams,
+    useRouteMatch
+} from "react-router-dom";
+import DashboardHome from '../DashboardHome/DashboardHome';
+import MakeAdmin from '../MakeAdmin/MakeAdmin';
+import Pay from '../Pay/Pay';
+import ManageAllProducts from '../ManageAllProducts/ManageAllProducts';
+import AddProducts from './AddProducts/AddProducts';
+import Review from '../Review/Review';
+import ViewAllOrder from '../ViewAllOrder/ViewAllOrder';
+import useAuth from '../../../hooks/useAuth';
+import MuiButton from '../../../styledComponent/MuiButton';
 import MyOrders from '../MyOrders/MyOrders';
+
+
+
 
 const drawerWidth = 240;
 
 function Dashboard(props) {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    let { path, url } = useRouteMatch();
+    const {admin,logOut} = useAuth();
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -31,17 +54,67 @@ function Dashboard(props) {
     const drawer = (
         <div>
             <Toolbar />
+            
+            
             <Divider />
             <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>
-                            {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                        </ListItemIcon>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
+                {
+                    !admin&&<Box>
+                        <Link to='/allProducts'>
+                            <Button color="inherit" >Best Products</Button>
+                        </Link>
+                        <br />
+                        <Link to={`${url}/myorder`}>
+                            <Button color="inherit" >MYorder</Button>
+                        </Link>
+                        <br />
+
+
+                        <Link to={`${url}/review`}>
+                            <Button color="inherit" > Review</Button>
+                        </Link>
+                        <br />
+                        <Link to={`${url}/pay`}>
+                            <Button color="inherit" > pay</Button>
+                        </Link>
+                        <br />
+                    </Box>
+                }
+                
             </List>
+            
+            
+            
+            
+            
+            {
+               admin&& <box>
+                    <Link to={`${url}/viewAllProducts`}>
+                        <Button color="inherit" > Manage all product</Button>
+                    </Link>
+                    <br />
+                    <Link to={`${url}/addProducts`}>
+                        <Button color="inherit" > Add a Products</Button>
+                    </Link>
+                    <br />
+                    <Link to={`${url}/manageAllProduct`}>
+                        <Button color="inherit" > Managed products </Button>
+                    </Link>
+                    
+                    <br />
+                    <Link to={`${url}/makeAdmin`}>
+                        <Button color="inherit" >make Admin</Button>
+                    </Link>
+
+                    </box>
+            }
+            <br />
+            <MuiButton onClick={logOut}> Log out</MuiButton>
+           
+
+            
+            
+            
             <Divider />
             
         </div>
@@ -71,7 +144,11 @@ function Dashboard(props) {
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
                         Admin dashboard
+                        <Link to='/home'>
+                            <Button color="inherit" sx={{ color: '#fff' }}>Home</Button>
+                        </Link>
                     </Typography>
+                    
                 </Toolbar>
             </AppBar>
             <Box
@@ -111,15 +188,44 @@ function Dashboard(props) {
                 sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
             >
                 <Toolbar />
-                <Typography paragraph>
-                    contents
-                </Typography>
-                <Typography paragraph>
-                    <Grid item xs={12}>
-                       <MyOrders></MyOrders>
-                    </Grid>
+                <Switch>
+                    <Route exact path={path}>
+                        
+                        
+                    </Route>
+                    <Route path={`${path}/makeAdmin`}>
+                        <MakeAdmin></MakeAdmin>
+                    </Route>
+                    <Route path={`${path}/pay`}>
+                        <Pay></Pay>
+                    </Route>
+                    <Route path={`${path}/manageAllProduct`}>
+                        <ManageAllProducts></ManageAllProducts>
+                        
                     
-                </Typography>
+                    </Route>
+                    <Route path={`${path}/addProducts`}>
+                        <AddProducts></AddProducts>
+                        
+                    
+                    </Route>
+                    <Route path={`${path}/viewAllProducts`}>
+                        <ViewAllOrder></ViewAllOrder>
+                        
+                    
+                    </Route>
+                    <Route path={`${path}/review`}>
+                        <Review></Review>
+                        
+                    
+                    </Route>
+                    <Route path={`${path}/myorder`}>
+                        <MyOrders></MyOrders>
+
+
+                    </Route>
+                    
+                </Switch>
             </Box>
         </Box>
     );

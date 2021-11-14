@@ -27,13 +27,16 @@ const Navigation = () => {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1,alignItems:'center'  } }>
                         Bike palace
                     </Typography>
-                    <Button color="inherit">####</Button>
+                    
                     <Link to="" className='nav-link text-black'>signed by :<span style={{ color: 'white' }}>{user.displayName} </span></Link>
                     <Link to='/home'>
                         <Button color="inherit" sx={{ color: '#fff' }}>Home</Button>
                     </Link>
                     <Link to= '/allProducts'>
                         <Button color="inherit" sx={{color:'#fff'}}>Best Products</Button>
+                    </Link>
+                    <Link to= '/newslatter'>
+                        <Button color="inherit" sx={{color:'#fff'}}>Newsletter</Button>
                     </Link>
                     
 
