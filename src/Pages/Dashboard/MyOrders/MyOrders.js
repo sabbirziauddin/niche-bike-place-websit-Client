@@ -58,6 +58,7 @@ const MyOrders = () => {
                             <TableCell align="right">Product Name</TableCell>
                             <TableCell align="right">product price</TableCell>
                             <TableCell align="right">Phone Number</TableCell>
+                            <TableCell align="right">Status</TableCell>
                             <TableCell align="right">action</TableCell>
                         </TableRow>
                     </TableHead>
@@ -73,7 +74,8 @@ const MyOrders = () => {
                                 <TableCell align="right">{row.email}</TableCell>
                                 <TableCell align="right">{row.productName}</TableCell>
                                 <TableCell align="right">{row.productPrice}</TableCell>
-                                <TableCell align="right">{row._id}</TableCell>
+                                <TableCell align="right">{row.phone}</TableCell>
+                                <TableCell align="right">{row.status}</TableCell>
                                 <TableCell align="right"><MuiButton onClick={() => handleDelete(row._id)}>Delete</MuiButton></TableCell>
                                 
                             </TableRow>

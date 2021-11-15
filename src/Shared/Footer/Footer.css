@@ -39,13 +39,12 @@ ul{
 }
 .footer-col h4::before{
     content: '';
-    position: absolute;
-    
+    position: absolute; 
     bottom: -10px;
     background-color: #e91e63;
     height: 2px;
     box-sizing: border-box;
-    width: 50px;
+    width: 40px;
 }
 .footer-col ul li {
     margin-bottom: 10px;
@@ -75,4 +74,5 @@ ul{
     border: 50%;
    text-align: center;
    margin: auto;
+   font-size: larger;
 }

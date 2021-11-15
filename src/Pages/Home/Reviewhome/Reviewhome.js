@@ -1,8 +1,10 @@
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Rating from 'react-rating';
+//import Rating from 'react-rating';
 import './ReviewHome.css'
+import Rating from '@mui/material/Rating';
+import Stack from '@mui/material/Stack';
 
 
 import CardContent from '@mui/material/CardContent';
@@ -10,7 +12,7 @@ import CardContent from '@mui/material/CardContent';
 
 import Typography from '@mui/material/Typography';
 import React, { useEffect, useState } from 'react';
-import { Container } from '@mui/material';
+import { Container, ratingClasses } from '@mui/material';
 import { Box } from '@mui/system';
 
 const Reviewhome = () => {
@@ -42,13 +44,14 @@ const Reviewhome = () => {
                                             ${review.comments}
                                         </Typography>
                                         <Typography variant="body2">
-                                            <Rating
+                                            {/* <Rating
                                                 initialRating={review.rating}
                                                 emptySymbol="far fa-star icon-color"
                                                 fullSymbol="fas fa-star icon-color"
                                                 readonly></Rating>
                                            
-                                            <br />
+                                            <br /> */}
+                                            <Rating name="half-rating-read" defaultValue={review.rating} precision={0.5} readOnly />
 
                                         </Typography>
                                     </CardContent>

@@ -28,7 +28,7 @@ const Navigation = () => {
                         Bike palace
                     </Typography>
                     
-                    <Link to="" className='nav-link text-black'>signed by :<span style={{ color: 'white' }}>{user.displayName} </span></Link>
+                    <Link to="" className='nav-link text-black'><span style={{color:'white'}}>signed by :</span><span style={{ color: 'white' }}>{user.displayName} </span></Link>
                     <Link to='/home'>
                         <Button color="inherit" sx={{ color: '#fff' }}>Home</Button>
                     </Link>
@@ -45,7 +45,7 @@ const Navigation = () => {
                             
                         <Box>
                                 <Link to='/dashboard' >
-                                    <Button color="inherit" sx={{ color: '#fff' }}>Admin Dashboard</Button>
+                                    <Button color="inherit" sx={{ color: '#fff' }}> Inventory Management</Button>
                                 </Link>
                                 <Button onClick={logOut} color="inherit" sx={{ color: '#fff' }}>LogOut</Button>
                         </Box>

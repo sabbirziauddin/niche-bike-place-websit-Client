@@ -9,6 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import MuiButton from '../../../styledComponent/MuiButton';
 import { Alert } from '@mui/material';
+import { useForm } from "react-hook-form";
 
 function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
@@ -16,12 +17,32 @@ function createData(name, calories, fat, carbs, protein) {
 
 const ManageAllProducts = () => {
     const [order,setOrder] = useState([]);
+    const [id,setId] =useState('');
+    const { register, handleSubmit } = useForm();
+   
     useEffect(()=>{
         fetch('http://localhost:5000/allorders')
         .then(res =>res.json())
         .then(data=>setOrder(data))
     },[])
 
+    const onSubmit = data => {
+        console.log(data,id);
+        fetch(`http://localhost:5000/statusUpdate/${id}`,{
+            method:'PUT',
+            headers:{"content-type":"application/json"},
+            body:JSON.stringify(data)
+        })
+        .then(res =>res.json())
+        .then(result=>console.log(result));
+    };
+   //handle status update 
+    const handleStatusUpdate =(id)=>{
+       setId(id);
+        
+
+    }
+//handle status update
 const handleDeleteOrder =(id)=>{
     const proceed = window.confirm("Do you want to delete!")
     if(proceed){
@@ -59,7 +80,9 @@ const handleDeleteOrder =(id)=>{
                             <TableCell align="right">Product Name</TableCell>
                             <TableCell align="right">product price</TableCell>
                             <TableCell align="right">Phone Number</TableCell>
+                            <TableCell align="right">status</TableCell>
                             <TableCell align="right">action</TableCell>
+                            <TableCell align="right">status manage</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -74,8 +97,21 @@ const handleDeleteOrder =(id)=>{
                                 <TableCell align="right">{row.email}</TableCell>
                                 <TableCell align="right">{row.productName}</TableCell>
                                 <TableCell align="right">{row.productPrice}</TableCell>
-                                <TableCell align="right">{row._id}</TableCell>
+                                <TableCell align="right">{row.phone}</TableCell>
+                                <TableCell align="right">{row?.status}</TableCell>
                                 <TableCell align="right"><MuiButton onClick={() => handleDeleteOrder(row._id)}>Delete</MuiButton></TableCell>
+                                
+                                <TableCell align="right">{
+                                    <form onSubmit={handleSubmit(onSubmit)}>
+                                        <label>{row?.status}</label>
+                                        <select onClick={() => handleStatusUpdate(row._id)} {...register ("status")}>
+                                            <option value={row?.status}>{row?.status}</option>
+                                            <option value="approved">approved</option>
+                                            <option value="done">Done</option>
+                                        </select>
+                                        <input type="submit" />
+                                    </form>
+                                }</TableCell>
 
                             </TableRow>
                         ))}
