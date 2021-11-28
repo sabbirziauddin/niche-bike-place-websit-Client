@@ -1,8 +1,10 @@
 import { Alert, TextField } from '@mui/material';
 import React, { useState } from 'react';
 import MuiButton from '../../../styledComponent/MuiButton';
+import useAuth from '../../../hooks/useAuth';
 
 const MakeAdmin = () => {
+    const {token} = useAuth();
     const [email, setEmail] = useState('');
     const [success,setSuccess] = useState(false);
     const handleOnblur = (e) => {
@@ -10,9 +12,10 @@ const MakeAdmin = () => {
     }
     const handleAdminSubmit = (e) => {
         const user = {email}
-        fetch('http://localhost:5000/users/admin',{
+        fetch('https://immense-oasis-52476.herokuapp.com/users/admin',{
             method:'PUT',
             headers:{
+                'authorization':`bearer ${token}`,
                 'content-type':'application/json'
             },
             body:JSON.stringify(user),

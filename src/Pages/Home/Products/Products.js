@@ -16,7 +16,7 @@ import Typography from '@mui/material/Typography';
 const Products = () => {
     const [allProducts, setAllProducts] = useState([]);
     useEffect(() => {
-        fetch('http://localhost:5000/allproducts')
+        fetch('https://immense-oasis-52476.herokuapp.com/allproducts')
             .then(res => res.json())
             .then(data => setAllProducts(data))
 

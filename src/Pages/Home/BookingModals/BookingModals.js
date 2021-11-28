@@ -53,7 +53,7 @@ const BookingModals = ({ openPlacing, handlePlacingClose, item, setOrderSuccess}
         console.log(order);
         // send data to the server
 
-        fetch('http://localhost:5000/orders',{
+        fetch('https://immense-oasis-52476.herokuapp.com/orders',{
             method:'POST',
             headers:{
                 'content-type':'application/json'

@@ -11,8 +11,8 @@ import useAuth from '../../../hooks/useAuth';
 
 
 const Login = () => {
-    const {user, loginUser} =useAuth();
-    const [loginData,setLoginData,isLoading,authError ] =useState({})
+    const { user, loginUser, isLoading, authError} =useAuth();
+    const [loginData,setLoginData ] =useState({})
     const location = useLocation();
     const history = useHistory()
     const style ={
@@ -42,14 +42,14 @@ const Login = () => {
     }
     return (
         <div >
-            <Container>
+            <Container sx={{ backgroundColor:'#f2f2f2',width:'50%',my:'5'}}>
                 <Grid container spacing={2}>
                     
                     <Grid item xs={12} md={12}>
                         <Typography variant="h4" gutterBottom >Login</Typography>
                         <form onSubmit={handleLoginSubmit} >
                             <TextField id="standard-basic"
-                                sx={{ width: '75%', m: '1', px: '5' }}
+                                sx={{ width: '50%', m: '1', px: '5' }}
                                 label="Your email"
                                 type="email"
                                 name="email"
@@ -58,7 +58,7 @@ const Login = () => {
                              <br />
                              <br />
                             <TextField
-                                sx={{ width: '75%', m: '1' }}
+                                sx={{ width: '50%', m: '1' }}
                                 id="outlined-password-input"
                                 label="Your Password"
                                 type="password"

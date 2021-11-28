@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import initializeFirebase from "../Pages/Login/Login/Firebase/firebase.init";
-import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, getIdToken, updateProfile} from "firebase/auth";
 
 
 
@@ -11,7 +11,8 @@ const useFirebase =()=>{
     const [user,setUser] =useState({});
     const [authError,setAuthError] = useState('');
     const [isLoading,setIsLoading] = useState(true);
-    const [admin,setAdmin] = useState(false)
+    const [admin,setAdmin] = useState(false);
+    const [token,setToken] = useState('');
     const auth = getAuth();
     const googleProvider = new GoogleAuthProvider();
 
@@ -91,6 +92,10 @@ const useFirebase =()=>{
         const unSubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setUser(user)
+                getIdToken(user)
+                .then(idToken=>{
+                    setToken(idToken);
+                })
                 
             } else {
                 setUser({});
@@ -104,7 +109,7 @@ const useFirebase =()=>{
 
     //for admin check in client side 
     useEffect(()=>{
-        fetch(`http://localhost:5000/users/${user.email}`)
+        fetch(`https://immense-oasis-52476.herokuapp.com/users/${user.email}`)
         .then(res=>res.json())
         .then(data =>{
             
@@ -129,7 +134,7 @@ const useFirebase =()=>{
         const user ={
             email, displayName
         };
-        fetch('http://localhost:5000/users',{
+        fetch('https://immense-oasis-52476.herokuapp.com/users',{
             method:(method),
             headers:{
                 'content-type':'application/json'
@@ -144,6 +149,7 @@ const useFirebase =()=>{
         user,
         admin,
         isLoading,
+        token,
         registerUser,
         logOut,
         loginUser,

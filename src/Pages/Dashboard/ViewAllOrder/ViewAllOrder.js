@@ -18,14 +18,14 @@ const ViewAllOrder = () => {
     const [products,setProducts]= useState([]);
 
     useEffect(()=>{
-        fetch('http://localhost:5000/allProducts')
+        fetch('https://immense-oasis-52476.herokuapp.com/allProducts')
         .then(res =>res.json())
         .then(data=>setProducts(data));
     },[])
     const handleDelete = (id) => {
         const proceed = window.confirm('do you want to delete')
         if(proceed){
-            const url = `http://localhost:5000/allproducts/${id}`
+            const url = `https://immense-oasis-52476.herokuapp.com/allproducts/${id}`
             fetch(url, {
                 method: 'DELETE'
             })

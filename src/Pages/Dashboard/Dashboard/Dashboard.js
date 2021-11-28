@@ -35,6 +35,7 @@ import ViewAllOrder from '../ViewAllOrder/ViewAllOrder';
 import useAuth from '../../../hooks/useAuth';
 import MuiButton from '../../../styledComponent/MuiButton';
 import MyOrders from '../MyOrders/MyOrders';
+import AdminRoute from '../../Login/AdminRoute/AdminRoute';
 
 
 
@@ -193,9 +194,9 @@ function Dashboard(props) {
                         
                         
                     </Route>
-                    <Route path={`${path}/makeAdmin`}>
+                    <AdminRoute path={`${path}/makeAdmin`}>
                         <MakeAdmin></MakeAdmin>
-                    </Route>
+                    </AdminRoute>
                     <Route path={`${path}/pay`}>
                         <Pay></Pay>
                     </Route>

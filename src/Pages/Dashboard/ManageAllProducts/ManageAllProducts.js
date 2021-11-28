@@ -21,14 +21,14 @@ const ManageAllProducts = () => {
     const { register, handleSubmit } = useForm();
    
     useEffect(()=>{
-        fetch('http://localhost:5000/allorders')
+        fetch('https://immense-oasis-52476.herokuapp.com/allorders')
         .then(res =>res.json())
         .then(data=>setOrder(data))
     },[])
 
     const onSubmit = data => {
         console.log(data,id);
-        fetch(`http://localhost:5000/statusUpdate/${id}`,{
+        fetch(`https://immense-oasis-52476.herokuapp.com/statusUpdate/${id}`,{
             method:'PUT',
             headers:{"content-type":"application/json"},
             body:JSON.stringify(data)
@@ -46,7 +46,7 @@ const ManageAllProducts = () => {
 const handleDeleteOrder =(id)=>{
     const proceed = window.confirm("Do you want to delete!")
     if(proceed){
-        const url = `http://localhost:5000/orders/${id}`
+        const url = `https://immense-oasis-52476.herokuapp.com/orders/${id}`
         fetch(url, {
             method: 'DELETE'
 

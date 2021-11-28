@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import { Password } from '@mui/icons-material';
 import { useHistory, useLocation } from 'react-router-dom';
+import { Backdrop } from '@mui/material/Backdrop';
 
 const Register = () => {
 
@@ -62,7 +63,7 @@ const Register = () => {
     return (
         <div>
             
-            <Container>
+            <Container style={{ backgroundColor:'#00bfff'}}>
                 <Grid container spacing={2}>
 
                     <Grid item xs={12} md={12}>
@@ -124,7 +125,8 @@ const Register = () => {
                             <br />
                            
 
-                            <MuiButton sx={{ width: '25%' }} type="submit"> login</MuiButton>
+                            <MuiButton sx={{ width: '25%' }} type="submit"> login</MuiButton> 
+                            <br/>
                             <MuiButton onClick={handleSignInWithGoogle}> Google sign IN</MuiButton>
                             
 
